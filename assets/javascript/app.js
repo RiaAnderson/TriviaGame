@@ -1,6 +1,6 @@
 //variables 
 var answer = "";
-var timer = "";
+// var timer = "";
 var totalScore = 0;
 var rightScore = 0;
 var wrongScore = 0;
@@ -9,15 +9,17 @@ var wrongScore = 0;
 $("#start").on("click", function (){
     
 //count down timer
-timer = setTimeout(function(){
+var timer = setTimeout(function(){
     console.log("timesout");
 }, 3000);
 });
 
-//trivia questions
-var triviaQuestions = [
+clearTimeout(timer);
+
+//trivia questions 
+const triviaQuestions = [
     {
-        questions: "What does the Imperius Curse do?",
+        question: "What does the Imperius Curse do?",
         answers: {
             a: "Kills the person"
             b: "Controls the person"
@@ -27,7 +29,7 @@ var triviaQuestions = [
         correctAnswer= "b"
     },
     {
-        questions: "What is Harry's Patronus?",
+        question: "What is Harry's Patronus?",
         answers: {
             a: "Stag"
             b: "Wolf"
@@ -37,7 +39,7 @@ var triviaQuestions = [
         correctAnswer= "a"
     },
     {
-        questions: "Who kills Professor Dumbledore?",
+        question: "Who kills Professor Dumbledore?",
         answers: {
             a: "Lord Voldemort"
             b: "Severus Snape"
@@ -47,7 +49,7 @@ var triviaQuestions = [
         correctAnswer= "d"
     },
     {
-        questions: "What was the Defence Against the Dark Arts curse?",
+        question: "What was the Defence Against the Dark Arts curse?",
         answers: {
             a: "Every year the professor died"
             b: "No professor could hold the position for more than a year"
@@ -57,17 +59,17 @@ var triviaQuestions = [
         correctAnswer= "b"
     },
     {
-        questions: "What kind of animal is Fluffy?",
+        question: "What kind of animal is Fluffy?",
         answers: {
-            a: "A dragon"
-            b: "A snake"
+            a: "A four-winged dragon"
+            b: "A two-headed snake"
             c: "A three-headed dog"
-            d: "A spider"
+            d: "A six-legged spider"
         },
         correctAnswer= "c"
     },
     {
-        questions: "How does Harry catch his first snitch?",
+        question: "How does Harry catch his first snitch?",
         answers: {
             a: "In his hat"
             b: "With his hand"
@@ -77,17 +79,17 @@ var triviaQuestions = [
         correctAnswer= "c"
     },
     {
-        questions: "Who is the first person from the wizarding world Harry meets?",
+        question: "Who is the first person from the wizarding world Harry meets?",
         answers: {
             a: "Hermione Granger"
-            b: "Controls the person"
+            b: "Ron Weasley"
             c: "Albus Dumbledore"
             d: "Rubeus Hagrid"
         },
         correctAnswer= "d"
     },
     {
-        questions: "What does the Mirror of Erised do?",
+        question: "What does the Mirror of Erised do?",
         answers: {
             a: "Shows your heart's desire"
             b: "Shows your future"
@@ -97,7 +99,7 @@ var triviaQuestions = [
         correctAnswer= "a"
     },
     {
-        questions: "What are the 3 Deathly Hallows?",
+        question: "What are the 3 Deathly Hallows?",
         answers: {
             a: "A wand, a stone and a cloak"
             b: "A wand, a stone and a ring"
@@ -107,7 +109,7 @@ var triviaQuestions = [
         correctAnswer= "a"
     },
     {
-        questions: "According to the Sorting Hat what qualities does Ravenclaw possess?",
+        question: "According to the Sorting Hat what qualities do Ravenclaw students possess?",
         answers: {
             a: "Patience and loyalty"
             b: "Cunning and deceit"
@@ -115,9 +117,54 @@ var triviaQuestions = [
             d: "Daring and nerve"
         },
         correctAnswer= "c"
-    },
+    }
 
-]
+];
+
+function triviaQuiz(){
+    const output = [];
+    triviaQuestions.forEach(
+        (currentQuestion, questionNumber) =>{
+            const answers = [];
+            for(letter in currentQuestion.answers){
+                answers.push(
+                    <label>
+                        <input type="radio" name="question${questionNumber}" value="${letter}">
+                            ${letter} :
+                            ${currentQuestion.answers[letter]}
+                        </input>
+                    </label>
+                );
+            }
+            output.push(
+                <div class="question"> ${currentQuestion.question} </div>
+                <div class="answers"> #{answers.join('')} </div>
+            )
+        };
+    )
+    triviaContainer.inner.html = out.join('');
+}
+
+function showResults(){
+    const answerContainers = triviaContainer.querySelectorAll('.answers');
+
+    let numCorrect = 0;
+
+    myQuestions.forEach((currentQuestion, questionNumber) => {
+        const answerContainer = answerContainers = [questionNumber];
+        const selector = 'input[name=question'+questionNumber+']:checked';
+        const userAnswer = (answerContainer.querySelector(selector)) || {}).value;
+
+        if(userAnswer === currentQuestion.correctAnswer) {
+            numCorrect++;
+            answerContainers[questionNumber].style.color = 'lightgreen';
+        }
+        else{
+            answerContainers[questionNumber].style.color = 'red';
+        }
+    });
+    resultsContainer.innerHTML = numCorrect + ' out of ' + myQuestions.length;
+}
 //function to select answer
 //provide a score at the end of the game
 //correct answers score
