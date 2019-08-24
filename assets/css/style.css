@@ -1,6 +1,10 @@
 body {
     background-image: url(../images/Deathly-Hallows.jpg);
-    background-repeat: no-repeat;
+    background-size:     cover;                    
+    background-repeat:   no-repeat;
+    /* background-position: center center;    */
+    color: white;
+    background-position: 0% 0%;
     
 }
 
