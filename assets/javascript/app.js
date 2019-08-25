@@ -214,7 +214,7 @@ var game = {
   result: function () {
     clearInterval(timer);
     $("subWrapper h2").remove();
-    $("#subWrapper").html("<h2>All done!</h2>");
+    $("#subWrapper").html("<h2>Your score</h2>");
     $("#subWrapper").append("<h3>Correct Answers: " + this.correct + "</h3>");
     $("#subWrapper").append("<h3>Incorrect Answers: " + this.incorrect + "</h3>");
     $("#subWrapper").append("<h3>Unanswered: " + (triviaQuestions.length - (this.incorrect + this.correct)) + "</h3>");
